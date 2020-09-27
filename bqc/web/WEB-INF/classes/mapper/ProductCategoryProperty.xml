@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+    <mapper namespace="mapper.ProductCategoryPropertyMapper">
+    	<resultMap type="ProductCategoryProperty" id="productCategoryPropertyBean">
+    		<id column="pcpid" property="id" />
+    		<result column="pcpname" property="name" />
+    		
+    		<association property="productCategory" javaType="ProductCategory">
+    			<id column="pcid" property="id" />
+    			<result column="pcname" property="name" />
+    		</association>
+    	</resultMap>
+    
+        <insert id="add" parameterType="ProductCategoryProperty" >
+            insert into product_category_property values (null,#{productCategory.id},#{name})   
+        </insert>
+         
+        <delete id="delete" parameterType="_int" >
+            delete from product_category_property where id= #{id}  
+        </delete>
+ 
+ 		<update id="update" parameterType="ProductCategoryProperty">
+            update product_category_property set name=#{name} where id=#{id}   
+        </update>
+         
+        <select id="get" parameterType="_int" resultMap="productCategoryPropertyBean">
+            select 
+	            pcp.id 'pcpid',
+	            pcp.name 'pcpname',
+	            pc.id 'pcid',
+	            pc.name 'pcname'
+            from  product_category_property pcp left join product_category pc 
+            on pcp.pcid = pc.id 
+            where pcp.id= #{id} 
+        </select>
+ 
+        <select id="list" resultMap="productCategoryPropertyBean" parameterType="ProductCategoryProperty">
+            select 
+            	pcp.id 'pcpid',
+	            pcp.name 'pcpname',
+	            pc.id 'pcid',
+	            pc.name 'pcname'
+            from product_category pc left join product_category_property pcp on pc.id=pcp.pcid 
+            <where>
+            	pcp.pcid=#{productCategory.id}
+            	
+            	<if test="name!=null">
+            		and pcp.name like concat('%',#{name},'%')
+            	</if>
+            </where>
+        </select>
+    </mapper>
