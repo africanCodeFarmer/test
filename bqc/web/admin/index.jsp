@@ -54,7 +54,8 @@
       <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
       <ul class="layui-nav layui-nav-tree"  lay-filter="test">
       	<li class="layui-nav-item"><a href="manageProductCategory">商品分类管理-分类和属性</a></li>
-      	
+      	<li class="layui-nav-item"><a href="manageUser">用户管理</a></li>
+      	<li class="layui-nav-item"><a href="manageProduct">产品管理</a></li>
       	
         <!-- <li class="layui-nav-item layui-nav-itemed">
           <a class="" href="javascript:;">所有商品</a>

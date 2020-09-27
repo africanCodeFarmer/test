@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+    <mapper namespace="mapper.ProductMapper">
+    	<resultMap type="Product" id="productBean">
+    		<id column="pid" property="id" />
+    		<result column="pname" property="name" />
+    		<result column="subTitle" property="subTitle" />
+    		<result column="orignalPrice" property="orignalPrice" />
+    		<result column="promotePrice" property="promotePrice" />
+    		<result column="stock" property="stock" />
+    		<result column="createTime" property="createTime" />
+    		
+    		<association property="productCategory" javaType="ProductCategory">
+    			<id column="pcid" property="id" />
+    			<result column="pcname" property="name" />
+    		</association>
+    	</resultMap>
+    
+        <insert id="add" parameterType="Product" >
+            insert into product values (
+            	null,
+            	#{name},
+            	#{subTitle},
+            	#{orignalPrice},
+            	#{promotePrice},
+            	#{stock},
+            	#{productCategory.id},
+            	#{createTime}
+            )   
+        </insert>
+         
+        <delete id="delete" parameterType="_int" >
+            delete from product where id= #{id}  
+        </delete>
+ 
+ 		<update id="update" parameterType="Product">
+            update product set 
+            	name=#{name},
+            	subTitle=#{subTitle},
+            	orignalPrice=#{orignalPrice},
+            	promotePrice=#{promotePrice},
+            	stock=#{stock},
+            	pcid=#{productCategory.id},
+            	createTime=#{createTime}
+            where id=#{id}   
+        </update>
+         
+        <select id="get" parameterType="_int" resultMap="productBean">
+            select 
+	            p.id 'pid',
+	            p.name 'pname',
+	            p.subTitle,
+	            p.orignalPrice,
+	            p.promotePrice,
+	            p.stock,
+	            p.createTime,
+	            pc.id 'pcid',
+	            pc.name 'pcname'
+            from  product p left join product_category pc 
+            on p.pcid = pc.id 
+            where p.id= #{id} 
+        </select>
+ 
+        <select id="list" resultMap="productBean" parameterType="Product">
+            select 
+            	p.id 'pid',
+	            p.name 'pname',
+	            p.subTitle,
+	            p.orignalPrice,
+	            p.promotePrice,
+	            p.stock,
+	            p.createTime,
+	            pc.id 'pcid',
+	            pc.name 'pcname'
+            from  product p left join product_category pc 
+            on p.pcid = pc.id 
+            <where>
+            	<if test="productCategory!=null">
+            		and p.pcid=#{productCategory.id}
+            	</if>
+            	
+            	<if test="name!=null">
+            		and p.name like concat('%',#{name},'%')
+            	</if>
+            </where>
+        </select>
+    </mapper>

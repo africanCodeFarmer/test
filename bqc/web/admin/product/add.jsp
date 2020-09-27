@@ -7,15 +7,49 @@
 
 </head>
 <body>
-<div style="padding:15px;">新增 ${father_pojo.name} 属性</div>
-
 <form class="layui-form" action="" style="padding:15px;">
-	<input type="hidden" name="pcid" value="${father_pojo.id}">
-
 	<div class="layui-form-item">
 	    <label class="layui-form-label">名字</label>
 	    <div class="layui-input-block">
 	    	<input type="text" name="name" class="layui-input" required lay-verify="required">
+	    </div>
+	</div>
+	
+	<div class="layui-form-item">
+	    <label class="layui-form-label">小标题</label>
+	    <div class="layui-input-block">
+	    	<input type="text" name="subTitle" class="layui-input" lay-verify="">
+	    </div>
+	</div>
+	
+	<div class="layui-form-item">
+	    <label class="layui-form-label">原价</label>
+	    <div class="layui-input-block">
+	    	<input type="text" name="orignalPrice" class="layui-input" lay-verify="">
+	    </div>
+	</div>
+	
+	<div class="layui-form-item">
+	    <label class="layui-form-label">促销价</label>
+	    <div class="layui-input-block">
+	    	<input type="text" name="promotePrice" class="layui-input" lay-verify="">
+	    </div>
+	</div>
+	
+	<div class="layui-form-item">
+	    <label class="layui-form-label">库存</label>
+	    <div class="layui-input-block">
+	    	<input type="text" name="stock" class="layui-input" lay-verify="">
+	    </div>
+	</div>
+	
+	<div class="layui-form-item">
+	    <label class="layui-form-label">商品分类</label>
+	    <div class="layui-input-block">
+	    	<select name="pcid" class="layui-select" required lay-verify="required">
+	    	<c:forEach var="pc" items="${pcs}">
+				<option value="${pc.id}">${pc.name}</option>
+            </c:forEach>
 	    </div>
 	</div>
 	
@@ -41,7 +75,7 @@ layui.use(['form', 'layer'], function () {
         $.ajax({
             type: "post",
             async:false,
-            url: "../addProductCategoryProperty",
+            url: "../addProduct",
             data: $("form").serialize(),//表单数据
             success: function (result) {
 	            var index = parent.layer.getFrameIndex(window.name);

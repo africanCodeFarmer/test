@@ -1,23 +1,36 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.util.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
 <link rel="stylesheet" href="../../include/layui/css/layui.css">
 <script src="../../include/layui/layui.js"></script>
 
 </head>
 <body>
-<div style="padding:15px;">新增 ${father_pojo.name} 属性</div>
-
 <form class="layui-form" action="" style="padding:15px;">
-	<input type="hidden" name="pcid" value="${father_pojo.id}">
-
 	<div class="layui-form-item">
 	    <label class="layui-form-label">名字</label>
 	    <div class="layui-input-block">
 	    	<input type="text" name="name" class="layui-input" required lay-verify="required">
 	    </div>
 	</div>
+	
+	<div class="layui-form-item">
+	    <label class="layui-form-label">密码</label>
+	    <div class="layui-input-block">
+	    	<input type="text" name="password" class="layui-input" required lay-verify="required">
+	    </div>
+	</div>
+	
+	<div class="layui-form-item">
+        <label class="layui-form-label" style="">类型</label>
+        <div class="layui-input-inline">
+            <select name="type" lay-verify="" class="layui-select statusSelect">
+                <option value ="0">普通用户</option>
+                <option value ="1">商家</option>
+                <option value ="2">管理员</option>
+            </select>
+        </div>
+    </div>
 	
 	<div class="layui-form-item">
 	    <label class="layui-form-label"></label>
@@ -41,7 +54,7 @@ layui.use(['form', 'layer'], function () {
         $.ajax({
             type: "post",
             async:false,
-            url: "../addProductCategoryProperty",
+            url: "addUser",
             data: $("form").serialize(),//表单数据
             success: function (result) {
 	            var index = parent.layer.getFrameIndex(window.name);

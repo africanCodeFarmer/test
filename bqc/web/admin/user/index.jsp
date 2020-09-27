@@ -58,8 +58,8 @@
     <div class="layui-side-scroll">
       <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
       <ul class="layui-nav layui-nav-tree"  lay-filter="test">
-      	<li class="layui-nav-item layui-nav-itemed"><a href="manageProductCategory">商品分类管理-分类和属性</a></li>
-      	<li class="layui-nav-item"><a href="manageUser">用户管理</a></li>
+      	<li class="layui-nav-item"><a href="manageProductCategory">商品分类管理-分类和属性</a></li>
+      	<li class="layui-nav-item layui-nav-itemed"><a href="manageUser">用户管理</a></li>
       	<li class="layui-nav-item"><a href="manageProduct">产品管理</a></li>
       </ul>
     </div>
@@ -69,8 +69,7 @@
     <!-- 内容主体区域 工作区-->
     <div style="padding: 15px;">
     	<div class="layui-breadcrumb">
-		  <a href="manageProductCategory">商品分类管理</a>
-		  <a><cite> ${father_pojo.name} 属性管理</cite></a>
+		  <a><cite>用户管理</cite></a>
 		</div>
 		
 	      <div class="search-div" style="padding-top:15px;">
@@ -109,9 +108,6 @@
 	<span class="layui-icon layui-icon-delete redColor"></span>
 </a>
 </script>
-<script type="text/html" id="productCategoryName">
-	{{d.productCategory.name}}
-</script>
 
 <script>
 //JavaScript代码区域
@@ -124,7 +120,7 @@ layui.use(['element','table','form'], function(){
   //第一个实例
   table.render({
     elem: '#demo'
-    ,url: 'listProductCategoryProperty?pcid='+${father_pojo.id} //数据接口
+    ,url: 'listUser' //数据接口
     ,height: 'full-240'
    	,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
            layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
@@ -138,7 +134,8 @@ layui.use(['element','table','form'], function(){
       {type:'checkbox'}
       ,{field: 'id', title: 'ID', width:80, sort: true}
       ,{field: 'name', title: '名字', width:200}
-      ,{title: '商品分类', templet:'#productCategoryName', width:200}
+      ,{field: 'password', title: '密码', width:200}
+      ,{field: 'typeText', title: '类型', width:100}
       ,{title:'操作', toolbar: '#barDemo', width:100,align:'center'}
     ]]
 	,toolbar: '#toolbarDemo'
@@ -192,7 +189,7 @@ layui.use(['element','table','form'], function(){
 	  data.forEach(function (element) {
 	    ids.push(element.id);
 	  });
-    
+	  
 	  switch(obj.event){
 	    case 'add':
 	      //layer.msg('添加');
@@ -203,7 +200,7 @@ layui.use(['element','table','form'], function(){
 	            shade: false,
 	            maxmin: true,
 	            area: ['60%', '60%'],
-	            content: "productCategoryProperty/addPage?pcid="+${father_pojo.id},
+	            content: "user/add.jsp",
 	      });
 	    break;
 	    case 'delete':
@@ -213,7 +210,7 @@ layui.use(['element','table','form'], function(){
 	            //删除
 		        $.ajax({
 		            type: "post",
-		            url: "deleteProductCategoryProperty",
+		            url: "deleteUser",
 		            traditional: true,
 		            data: {
 		                id: ids,
@@ -240,15 +237,16 @@ layui.use(['element','table','form'], function(){
     var data = obj.data;
     var id = data.id; //点击行id
     
+    //console.log(obj)
     if(obj.event === 'del'){
       layer.confirm('真的删除行么', function(index){
         //obj.del();
         layer.close(index);
         
-      	//删除
+        //删除
         $.ajax({
             type: "post",
-            url: "deleteProductCategoryProperty",
+            url: "deleteUser",
             traditional: true,
             data: {
                 id: [id],
@@ -270,7 +268,7 @@ layui.use(['element','table','form'], function(){
             shade: false,
             maxmin: true,
             area: ['60%', '60%'],
-            content: "editProductCategoryProperty?id="+id+"&pcid="+${father_pojo.id},
+            content: "editUser?id="+id,
         });
     }
   });

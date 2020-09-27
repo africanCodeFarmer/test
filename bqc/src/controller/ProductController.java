@@ -15,56 +15,56 @@ import org.springframework.web.servlet.ModelAndView;
 import com.github.pagehelper.PageInfo;
 
 import pojo.ProductCategory;
-import pojo.ProductCategoryProperty;
-import service.ProductCategoryPropertyService;
+import pojo.Product;
+import service.ProductService;
 import service.ProductCategoryService;
 import util.Page;
 
 @Controller
 @RequestMapping("")
-public class ProductCategoryPropertyController {
+public class ProductController {
 	@Autowired
-	ProductCategoryPropertyService service;
+	ProductService service;
 	@Autowired
 	ProductCategoryService pcService;
 	
-	@RequestMapping("admin/manageProductCategoryProperty")
+	@RequestMapping("admin/manageProduct")
 	public ModelAndView manage(HttpServletRequest request) {
 		return service.manage(request);
 	}
 	
 	@ResponseBody
-	@RequestMapping("admin/listProductCategoryProperty")
+	@RequestMapping("admin/listProduct")
 	public Map<String, Object> list(Page page,HttpServletRequest request) {	
 		return service.list(page, request);
 	}
 	
 	@ResponseBody
-	@RequestMapping("admin/deleteProductCategoryProperty")
+	@RequestMapping("admin/deleteProduct")
 	public void delete(HttpServletRequest request) {
 		service.delete(request);
 	}
 	
 	@ResponseBody
-	@RequestMapping("admin/editProductCategoryProperty")
+	@RequestMapping("admin/editProduct")
 	public ModelAndView edit(HttpServletRequest request) {
 		return service.edit(request);
 	}
 	
 	@ResponseBody
-	@RequestMapping("admin/updateProductCategoryProperty")
+	@RequestMapping("admin/updateProduct")
 	public void update(HttpServletRequest request) {
 		service.update(request);
 	}
 	
 	@ResponseBody
-	@RequestMapping("admin/addProductCategoryProperty")
-	public void addProductCategoryProperty(HttpServletRequest request) {
+	@RequestMapping("admin/addProduct")
+	public void addProduct(HttpServletRequest request) {
 		service.add(request);
 	}
 	
 	@ResponseBody
-	@RequestMapping("admin/productCategoryProperty/addPage")
+	@RequestMapping("admin/product/addPage")
 	public ModelAndView addPage(HttpServletRequest request) {
 		return service.addPage(request);
 	}

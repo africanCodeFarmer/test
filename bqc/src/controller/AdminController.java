@@ -12,4 +12,10 @@ public class AdminController {
 		ModelAndView mav = new ModelAndView("admin/index");
 		return mav;
 	}
+	
+	@RequestMapping("admin/login")
+	public ModelAndView login() {
+		ModelAndView mav = new ModelAndView("admin/login");
+		return mav;
+	}
 }

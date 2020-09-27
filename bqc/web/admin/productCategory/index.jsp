@@ -59,6 +59,8 @@
       <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
       <ul class="layui-nav layui-nav-tree"  lay-filter="test">
       	<li class="layui-nav-item layui-nav-itemed"><a href="manageProductCategory">商品分类管理-分类和属性</a></li>
+      	<li class="layui-nav-item"><a href="manageUser">用户管理</a></li>
+      	<li class="layui-nav-item"><a href="manageProduct">产品管理</a></li>
       </ul>
     </div>
   </div>
@@ -140,7 +142,7 @@ layui.use(['element','table','form'], function(){
     ,cols: [[ //表头
       {type:'checkbox'}
       ,{field: 'id', title: 'ID', width:80, sort: true}
-      ,{field: 'name', title: '名字', width:80}
+      ,{field: 'name', title: '名字', width:400}
       ,{title:'分类属性管理', width:120, align:'center', templet:'#productCategoryPropertyTp'}
       ,{title:'操作', toolbar: '#barDemo', width:100,align:'center'}
     ]]
