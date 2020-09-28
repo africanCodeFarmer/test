@@ -75,7 +75,7 @@
 		</div>
 		
 	      <div class="search-div" style="padding-top:15px;">
-			<input class="layui-input" id="searchNameInput" type="text" placeholder="名字" style="width:100px;">
+			<input class="layui-input" id="searchNameInput" type="text" placeholder="值" style="width:100px;">
 			<div class="layui-btn-container">
 
 				<button class="layui-btn layui-btn-sm" id="searchBtn"><span class="layui-icon layui-icon-search"></span></button>
@@ -96,8 +96,8 @@
 
 <script type="text/html" id="toolbarDemo">
   <div class="layui-btn-container">
-    <button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="add">添加</button>
-    <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delete">批量删除</button>
+    <button class="layui-btn layui-btn-sm layui-btn-normal layui-btn-disabled" lay-event="add">添加</button>
+    <button class="layui-btn layui-btn-sm layui-btn-danger layui-btn-disabled" lay-event="delete">批量删除</button>
     <button class="layui-btn layui-btn-sm layui-btn-disabled" lay-event="update">编辑</button>
   </div>
 </script>
@@ -144,7 +144,7 @@ layui.use(['element','table','form'], function(){
       ,{field: 'value', title: '值', edit:true, width:200}
       ,{title: '产品', templet:'#productName', width:200}
       ,{title: '产品分类属性', templet:'#productCategoryPropertyName', width:200}
-      ,{title:'操作', toolbar: '#barDemo', width:100,align:'center'}
+      //,{title:'操作', toolbar: '#barDemo', width:100,align:'center'}
     ]]
 	,toolbar: '#toolbarDemo'
 	,done: function(res, curr, count){
@@ -221,19 +221,21 @@ layui.use(['element','table','form'], function(){
     
 	  switch(obj.event){
 	    case 'add':
-	      //layer.msg('添加');
+	      layer.msg('暂不开放此功能');
 	      
-	      layer.open({
+	      /* layer.open({
 	            type: 2,
 	            title: '添加数据',
 	            shade: false,
 	            maxmin: true,
 	            area: ['60%', '60%'],
 	            content: "productCategoryProperty/addPage?pcid="+${father_pojo.id},
-	      });
+	      }); */
 	    break;
 	    case 'delete':
-	    	layer.confirm('真的批量删除行么', function(index){
+	    	layer.msg('暂不开放此功能');
+	    	
+	    	/* layer.confirm('真的批量删除行么', function(index){
 	            layer.close(index);
 	            
 	            //删除
@@ -253,10 +255,10 @@ layui.use(['element','table','form'], function(){
 		            	layer.msg('删除完毕');
 		            }
 		        });
-	          });
+	          }); */
 	    break;
 	    case 'update':
-	      //layer.msg('编辑');
+	    	layer.msg('暂不开放此功能');
 	    break;
 	  };
   });

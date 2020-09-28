@@ -153,7 +153,7 @@ layui.use(['element','table','form'], function(){
     ,cols: [[ //表头
       {type:'checkbox'}
       ,{field: 'id', title: 'ID', width:80, sort: true}
-      ,{title: '产品属性', align: 'center', templet:'#productCategoryPropertyValueTp', width:120}
+      ,{title: '产品属性管理', align: 'center', templet:'#productCategoryPropertyValueTp', width:120}
       ,{field: 'name', title: '名字', width:200}
       ,{field: 'subTitle', title: '小标题', width:200}
       ,{field: 'orignalPrice', title: '原价', width:100}

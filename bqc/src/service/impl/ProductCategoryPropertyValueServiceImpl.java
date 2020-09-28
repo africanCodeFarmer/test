@@ -94,6 +94,15 @@ public class ProductCategoryPropertyValueServiceImpl implements ProductCategoryP
 		return map;
 	}
 
+	@Override
+	public void update(HttpServletRequest request) {
+		ProductCategoryPropertyValue pojo = new ProductCategoryPropertyValue();
+		pojo.setId(Integer.parseInt(request.getParameter("id")));
+		pojo.setValue(request.getParameter("value"));
+		
+		mapper.update(pojo);
+	}
+	
 	//暂不更改
 	@Override
 	public void add(HttpServletRequest request) {
@@ -105,15 +114,6 @@ public class ProductCategoryPropertyValueServiceImpl implements ProductCategoryP
 	public void delete(HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public void update(HttpServletRequest request) {
-		ProductCategoryPropertyValue pojo = new ProductCategoryPropertyValue();
-		pojo.setId(Integer.parseInt(request.getParameter("id")));
-		pojo.setValue(request.getParameter("value"));
-		
-		mapper.update(pojo);
 	}
 
 	@Override
