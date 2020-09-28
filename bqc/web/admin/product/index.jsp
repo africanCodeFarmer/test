@@ -74,21 +74,23 @@
 		</div>
 		
 	      <div class="search-div" style="padding-top:15px;">
-	      	<input class="layui-input" id="searchNameInput" type="text" placeholder="名字" style="width:100px;">
-			
-			<div class="layui-form">
-				<select class="layui-select" id="searchProductCategorySelect" lay-filter="">
-					<option value="">搜索商品分类</option>
-			    	<c:forEach var="pc" items="${pcs}">
-						<option value="${pc.id}">${pc.name}</option>
-		            </c:forEach>
-	            </select>
-            </div>
-            
-            <div class="layui-btn-container">
-				<button class="layui-btn layui-btn-sm" id="searchBtn"><span class="layui-icon layui-icon-search"></span></button>
-			    <button class="layui-btn layui-btn-sm layui-btn-primary" id="resetBtn"><span class="layui-icon layui-icon-close"></span></button>
-	    	</div>
+	      	<form>
+		      	<input class="layui-input" id="searchNameInput" type="text" placeholder="名字" style="width:100px;">
+				
+				<div class="layui-form">
+					<select class="layui-select" id="searchProductCategorySelect" lay-filter="">
+						<option value="">搜索商品分类</option>
+				    	<c:forEach var="pc" items="${pcs}">
+							<option value="${pc.id}">${pc.name}</option>
+			            </c:forEach>
+		            </select>
+	            </div>
+	            
+	            <div class="layui-btn-container">
+					<button class="layui-btn layui-btn-sm" id="searchBtn"><span class="layui-icon layui-icon-search"></span></button>
+				    <button type="reset" class="layui-btn layui-btn-sm layui-btn-primary" id="resetBtn"><span class="layui-icon layui-icon-close"></span></button>
+		    	</div>
+		    </form>
 		  </div>
 		
     	<table id="demo" lay-filter="test"></table>
@@ -172,7 +174,7 @@ layui.use(['element','table','form'], function(){
   	,initSort: {field:'id', type:'asc'}
   });
   
-  //搜索重置按钮监听
+  //搜索 重置按钮监听
   $("button#searchBtn").click(function(){
 	  var search_name = $("input#searchNameInput").val();
 	  var search_productCategory = $("select#searchProductCategorySelect option:selected").val();
@@ -187,10 +189,11 @@ layui.use(['element','table','form'], function(){
 		    	search_productCategory: search_productCategory,
 		    }
 		});
+	
+		return false;
   })
   $("button#resetBtn").click(function(){
 	  $("input#searchNameInput").val('');
-	  
 	  
 		//执行重载
 		table.reload('test', {
