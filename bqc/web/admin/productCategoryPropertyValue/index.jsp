@@ -70,27 +70,18 @@
     <div style="padding: 15px;">
     	<div class="layui-breadcrumb">
 		  <a href="manageProductCategory">商品分类管理</a>
-		  <a><cite> ${father_pojo.name} 产品管理</cite></a>
+		  <a href="manageProduct">产品管理</a>
+		  <a><cite> ${father_pojo.name} 产品属性管理</cite></a>
 		</div>
 		
 	      <div class="search-div" style="padding-top:15px;">
-	      	<form>
-		      	<input class="layui-input" id="searchNameInput" type="text" placeholder="名字" style="width:100px;">
-				
-				<div class="layui-form">
-					<select class="layui-select" id="searchProductCategorySelect" lay-filter="">
-						<option value="">搜索商品分类</option>
-				    	<c:forEach var="pc" items="${pcs}">
-							<option value="${pc.id}">${pc.name}</option>
-			            </c:forEach>
-		            </select>
-	            </div>
-	            
-	            <div class="layui-btn-container">
-					<button class="layui-btn layui-btn-sm" id="searchBtn"><span class="layui-icon layui-icon-search"></span></button>
-				    <button type="reset" class="layui-btn layui-btn-sm layui-btn-primary" id="resetBtn"><span class="layui-icon layui-icon-close"></span></button>
-		    	</div>
-		    </form>
+			<input class="layui-input" id="searchNameInput" type="text" placeholder="名字" style="width:100px;">
+			<div class="layui-btn-container">
+
+				<button class="layui-btn layui-btn-sm" id="searchBtn"><span class="layui-icon layui-icon-search"></span></button>
+			    <button class="layui-btn layui-btn-sm layui-btn-primary" id="resetBtn"><span class="layui-icon layui-icon-close"></span></button>
+
+		    </div>
 		  </div>
 		
     	<table id="demo" lay-filter="test"></table>
@@ -119,16 +110,13 @@
 	<span class="layui-icon layui-icon-delete redColor"></span>
 </a>
 </script>
-<script type="text/html" id="productCategoryName">
-	{{d.productCategory.name}}
+<script type="text/html" id="productName">
+	{{d.product.name}}
 </script>
-<script type="text/html" id="productCategoryPropertyValueTp">
-    <div>
-		<a href="manageProductCategoryPropertyValue?pid={{d.id}}" class="layui-table-link">
-			<span class="layui-icon layui-icon-layer"></span>
-		</a>
-	</div>
+<script type="text/html" id="productCategoryPropertyName">
+	{{d.productCategoryProperty.name}}
 </script>
+
 <script>
 //JavaScript代码区域
 layui.use(['element','table','form'], function(){
@@ -140,7 +128,7 @@ layui.use(['element','table','form'], function(){
   //第一个实例
   table.render({
     elem: '#demo'
-    ,url: 'listProduct' //数据接口
+    ,url: 'listProductCategoryPropertyValue?pid='+${father_pojo.id} //数据接口
     ,height: 'full-240'
    	,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
            layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
@@ -153,17 +141,10 @@ layui.use(['element','table','form'], function(){
     ,cols: [[ //表头
       {type:'checkbox'}
       ,{field: 'id', title: 'ID', width:80, sort: true}
-      ,{title: '产品属性', align: 'center', templet:'#productCategoryPropertyValueTp', width:120}
-      ,{field: 'name', title: '名字', width:200}
-      ,{field: 'subTitle', title: '小标题', width:200}
-      ,{field: 'orignalPrice', title: '原价', width:100}
-      ,{field: 'promotePrice', title: '促销价', width:100}
-      ,{field: 'stock', title: '库存', width:100}
-      ,{title: '商品分类', templet:'#productCategoryName', width:200}
-      ,{field: 'createTime', title: '创建时间', width:200, templet:function(d){
-    	  return layui.util.toDateString(d.createTime/1);
-      }}
-      ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:100,align:'center'}
+      ,{field: 'value', title: '值', width:200}
+      ,{title: '产品', templet:'#productName', width:200}
+      ,{title: '产品分类属性', templet:'#productCategoryPropertyName', width:200}
+      ,{title:'操作', toolbar: '#barDemo', width:100,align:'center'}
     ]]
 	,toolbar: '#toolbarDemo'
 	,done: function(res, curr, count){
@@ -178,14 +159,12 @@ layui.use(['element','table','form'], function(){
 	    console.log(count); */
     }
   	,id:'test'
-  	,initSort: {field:'id', type:'asc'}
   });
   
-  //搜索 重置按钮监听
+  //搜索重置按钮监听
   $("button#searchBtn").click(function(){
 	  var search_name = $("input#searchNameInput").val();
-	  var search_productCategory = $("select#searchProductCategorySelect option:selected").val();
-	  
+
 		//执行重载
 		table.reload('test', {
 		    page: {
@@ -193,11 +172,8 @@ layui.use(['element','table','form'], function(){
 		    }
 		    , where: {
 		    	search_name: search_name,
-		    	search_productCategory: search_productCategory,
 		    }
 		});
-	
-		return false;
   })
   $("button#resetBtn").click(function(){
 	  $("input#searchNameInput").val('');
@@ -209,7 +185,6 @@ layui.use(['element','table','form'], function(){
 		    }
 		    , where: {
 		    	search_name: null,
-		    	search_productCategory: null,
 		    }
 		}); 
   })
@@ -233,7 +208,7 @@ layui.use(['element','table','form'], function(){
 	            shade: false,
 	            maxmin: true,
 	            area: ['60%', '60%'],
-	            content: "product/addPage",
+	            content: "productCategoryProperty/addPage?pcid="+${father_pojo.id},
 	      });
 	    break;
 	    case 'delete':
@@ -243,7 +218,7 @@ layui.use(['element','table','form'], function(){
 	            //删除
 		        $.ajax({
 		            type: "post",
-		            url: "deleteProduct",
+		            url: "deleteProductCategoryProperty",
 		            traditional: true,
 		            data: {
 		                id: ids,
@@ -278,7 +253,7 @@ layui.use(['element','table','form'], function(){
       	//删除
         $.ajax({
             type: "post",
-            url: "deleteProduct",
+            url: "deleteProductCategoryProperty",
             traditional: true,
             data: {
                 id: [id],
@@ -300,7 +275,7 @@ layui.use(['element','table','form'], function(){
             shade: false,
             maxmin: true,
             area: ['60%', '60%'],
-            content: "editProduct?id="+id,
+            content: "editProductCategoryProperty?id="+id+"&pcid="+${father_pojo.id},
         });
     }
   });

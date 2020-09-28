@@ -39,3 +39,16 @@ CREATE TABLE product (
 
 insert into product values 
 	(null,'p1','1',2,3,4,1,'2020-09-27'),(null,'p2','2',3,4,5,2,'2020-09-28')
+	
+CREATE TABLE product_category_property_value (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  pid int(11) NOT NULL  COMMENT '产品id',
+  pcpid int(11) NOT NULL  COMMENT '商品分类属性id',
+  value varchar(255) DEFAULT NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT fk_pcpv_product FOREIGN KEY (pid) REFERENCES product (id),
+  CONSTRAINT fk_pcpv_product_category_property FOREIGN KEY (pcpid) REFERENCES product_category_property (id)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+insert into product_category_property_value values 
+	(null,16,1,'8核'),(null,16,2,'4G')

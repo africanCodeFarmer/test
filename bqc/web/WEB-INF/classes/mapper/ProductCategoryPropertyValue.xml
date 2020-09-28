@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+    <mapper namespace="mapper.ProductCategoryPropertyValueMapper">
+    	<resultMap type="ProductCategoryPropertyValue" id="productCategoryPropertyValueBean">
+    		<id column="pcpvid" property="id" />
+    		<result column="value" property="value" />
+    		
+    		<association property="product" javaType="Product">
+    			<id column="pid" property="id" />
+	    		<result column="pname" property="name" />
+	    		<result column="subTitle" property="subTitle" />
+	    		<result column="orignalPrice" property="orignalPrice" />
+	    		<result column="promotePrice" property="promotePrice" />
+	    		<result column="stock" property="stock" />
+	    		<result column="createTime" property="createTime" />
+    		</association>
+    		
+    		<association property="productCategoryProperty" javaType="ProductCategoryProperty">
+    			<id column="pcpid" property="id" />
+    			<result column="pcpname" property="name" />
+    		</association>
+    	</resultMap>
+    
+        <insert id="add" parameterType="ProductCategoryPropertyValue" >
+            insert into product_category_property_value values (
+            	null,
+            	#{product.id},
+            	#{productCategoryProperty.id},
+            	#{value}
+            )   
+        </insert>
+         
+        <delete id="delete" parameterType="_int" >
+            delete from product_category_property_value where id= #{id}  
+        </delete>
+ 
+ 		<update id="update" parameterType="ProductCategoryPropertyValue">
+            update product_category_property_value set value=#{value} where id=#{id}   
+        </update>
+     
+        <select id="get" parameterType="_int" resultMap="productCategoryPropertyValueBean">
+            select 
+	            pcpv.id 'pcpvid',
+	            pcpv.value 'value',
+	            
+	            pcp.id 'pcpid',
+	            pcp.name 'pcpname',
+	            
+	            p.id 'pid',
+	            p.name 'pname',
+	            p.subTitle, 
+	            p.orignalPrice, 
+	            p.promotePrice, 
+	            p.stock, 
+	            p.createTime
+            from  product_category_property_value pcpv 
+            	left join product p on pcpv.pid = p.id
+            	left join product_category_property pcp on pcpv.pcpid = pcp.id
+            where pcpv.id= #{id} 
+        </select>
+ 
+        <select id="list" resultMap="productCategoryPropertyValueBean" parameterType="ProductCategoryPropertyValue">
+            select 
+	            pcpv.id 'pcpvid',
+	            pcpv.value 'value',
+	            
+	            pcp.id 'pcpid',
+	            pcp.name 'pcpname',
+	            
+	            p.id 'pid',
+	            p.name 'pname',
+	            p.subTitle, 
+	            p.orignalPrice, 
+	            p.promotePrice, 
+	            p.stock, 
+	            p.createTime
+            from  product_category_property_value pcpv 
+            	left join product p on pcpv.pid = p.id
+            	left join product_category_property pcp on pcpv.pcpid = pcp.id
+            <where>
+            	pcpv.pid=#{product.id}
+            	
+            	<if test="value!=null">
+            		and pcpv.value like concat('%',#{value},'%')
+            	</if>
+            </where>
+        </select>
+        
+        <select id="getByPidAndPcpId" parameterType="ProductCategoryPropertyValue" resultMap="productCategoryPropertyValueBean">
+            select 
+	            pcpv.id 'pcpvid',
+	            pcpv.value 'value',
+	            
+	            pcp.id 'pcpid',
+	            pcp.name 'pcpname',
+	            
+	            p.id 'pid',
+	            p.name 'pname',
+	            p.subTitle, 
+	            p.orignalPrice, 
+	            p.promotePrice, 
+	            p.stock, 
+	            p.createTime
+            from  product_category_property_value pcpv 
+            	left join product p on pcpv.pid = p.id
+            	left join product_category_property pcp on pcpv.pcpid = pcp.id
+            where 
+            	pcpv.pid= #{product.id} and
+            	pcpv.pcpid= #{productCategoryProperty.id}
+        </select>
+    </mapper>
