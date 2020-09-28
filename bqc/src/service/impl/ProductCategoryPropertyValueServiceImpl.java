@@ -109,8 +109,11 @@ public class ProductCategoryPropertyValueServiceImpl implements ProductCategoryP
 
 	@Override
 	public void update(HttpServletRequest request) {
-		// TODO Auto-generated method stub
+		ProductCategoryPropertyValue pojo = new ProductCategoryPropertyValue();
+		pojo.setId(Integer.parseInt(request.getParameter("id")));
+		pojo.setValue(request.getParameter("value"));
 		
+		mapper.update(pojo);
 	}
 
 	@Override

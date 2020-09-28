@@ -141,7 +141,7 @@ layui.use(['element','table','form'], function(){
     ,cols: [[ //表头
       {type:'checkbox'}
       ,{field: 'id', title: 'ID', width:80, sort: true}
-      ,{field: 'value', title: '值', width:200}
+      ,{field: 'value', title: '值', edit:true, width:200}
       ,{title: '产品', templet:'#productName', width:200}
       ,{title: '产品分类属性', templet:'#productCategoryPropertyName', width:200}
       ,{title:'操作', toolbar: '#barDemo', width:100,align:'center'}
@@ -159,6 +159,27 @@ layui.use(['element','table','form'], function(){
 	    console.log(count); */
     }
   	,id:'test'
+  });
+  
+  //监听单元格编辑
+  table.on('edit(test)', function(obj){
+    var value = obj.value //得到修改后的值
+    ,data = obj.data //得到所在行所有键值
+    ,field = obj.field; //得到字段
+    
+    //layer.msg('[ID: '+ data.id +'] ' + field + ' 字段更改为：'+ value);
+    //删除
+    $.ajax({
+        type: "post",
+        url: "updateProductCategoryPropertyValue",
+        data: {
+            id: data.id,
+            value:value,
+        },
+        success: function (result) {
+        	layer.msg('更新完毕');
+        }
+    });
   });
   
   //搜索重置按钮监听
