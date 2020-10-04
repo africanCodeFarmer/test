@@ -1,0 +1,174 @@
+<cu-custom bgColor="bg-gradual-blue" isBack="{{true}}">
+	<view slot="backText">{{custom_data.backText}}</view>
+	<view slot="content">{{custom_data.content}}</view>
+</cu-custom>
+
+<view class="padding">
+  <view class="padding radius shadow bg-white">
+    <van-row>
+      <van-col span="12">
+        <view class="text-left" style="font-size:20px;">时间: {{month_title}}</view>
+      </van-col>
+      <van-col span="6">
+        <view class="text-right">
+          <van-button plain round size="small" bind:click="onClick_timeChoose">时间选择</van-button>
+        </view>
+      </van-col>
+      <van-col span="6">
+        <view class="text-right">
+          <van-button plain round type="primary" size="small" bind:click="onClick_loadChart">加载图表</van-button>
+        </view>
+      </van-col>
+    </van-row>
+
+    <view style="height:40rpx;"></view>
+
+    <van-row>
+      <van-col span="12">
+        <view class="text-left">月花支: {{month_spend}}</view>
+      </van-col>
+      <van-col span="12">
+        <view class="text-right">月收入: {{month_income}}</view>
+      </van-col>
+    </van-row>
+  </view>
+</view>
+
+<view class="padding">
+  <view class="padding radius shadow bg-white">
+    <view class="box" style="height:{{canvas_height}}rpx;">
+      <ec-canvas id="column_chart" canvas-id="column_chart" ec="{{ ec_column_chart }}"></ec-canvas>
+    </view>
+  </view>
+</view>
+
+<view class="padding">
+  <view class="padding radius shadow bg-white">
+    <view class="box" style="height:{{canvas_height==0?0:canvas_height+100}}rpx;">
+      <ec-canvas id="pie_chart" canvas-id="pie_chart" ec="{{ ec_pie_chart }}"></ec-canvas>
+    </view>
+  </view>
+</view>
+
+<!--详细支出数据 -->
+<van-transition show="{{spendLogs_filter_spend.length>0}}" custom-class="block">
+  <!-- wx:if="{{spendLogs_filter_spend.length>0}}" -->
+  <view class="padding">
+    <view class="padding radius shadow bg-white">
+      <!-- content-header -->
+      <view style="padding:10rpx 4% 20rpx 4%;border-bottom:1px solid #F5F6F8;">
+        <van-row>
+          <van-col span="20">
+            <text style="font-size:20px;font-weight:blod;color:#000000;">选取部分的详细支出数据</text>
+          </van-col>
+          <van-col span="4">
+            <van-button plain round type="default" size="small" bind:click="clear_spendLogs_filter_spend">X</van-button>
+          </van-col>
+        </van-row>
+      </view>
+
+      <!-- content-content -->
+      <view wx:for="{{spendLogs_filter_spend}}" wx:for-item="datas">  
+        <view style="border-bottom:1px solid #F5F6F8">
+          <van-row>
+            <van-col offset="1" span="3">
+              <text class="cuIcon-{{datas.icon}}" style="margin-right:20rpx;font-size:36px;"></text>
+            </van-col>
+            <van-col span="19">
+              <van-row>
+                <van-col span="14" class="text-left">
+                  <view>
+                    <text style="font-size:17px;">{{datas.name}} </text>
+                    <text style="font-size:14px;color:#888888;" class="overFlow">{{datas.comment}}</text>
+                  </view>
+                  <view style="font-size:11px;color:#B2B2B2;margin-bottom:5rpx;">{{datas.time}} {{datas.detail_time}} {{datas.spend_type==null?'转账':datas.spend_type}}</view>
+                </van-col>
+                <van-col span="10" class="text-right">
+                  <view wx:if="{{datas.spend_type==null}}" class="text-right" style="font-size:17px;color:#888888;">{{datas.operate}}{{datas.value}}</view>
+                  <view wx:elif="{{datas.operate=='+'}}" class="text-right" style="font-size:17px;color:#09BB07;">{{datas.operate}}{{datas.value}}</view>
+                  <view wx:else class="text-right" style="font-size:17px;color:#E64340;">{{datas.operate}}{{datas.value}}</view>
+                  <view style="font-size:14px;color:#888888;">余额: {{datas.remain}}</view>
+                </van-col>
+              </van-row>
+            </van-col>
+            <van-col span="1"></van-col>
+          </van-row>
+        </view>
+      </view>
+
+    </view>
+  </view>
+</van-transition>
+
+<view class="padding">
+  <view class="padding radius shadow bg-white">
+    <view class="box" style="height:{{canvas_height==0?0:canvas_height+100}}rpx;">
+      <ec-canvas id="income_pie_chart" canvas-id="income_pie_chart" ec="{{ ec_income_pie_chart }}"></ec-canvas>
+    </view>
+  </view>
+</view>
+
+<!--详细收入数据 -->
+<van-transition show="{{spendLogs_filter_income.length>0}}" custom-class="block">
+  <view class="padding">
+    <view class="padding radius shadow bg-white">
+      <!-- content-header -->
+      <view style="padding:10rpx 4% 20rpx 4%;border-bottom:1px solid #F5F6F8;">
+        <van-row>
+          <van-col span="20">
+            <text style="font-size:20px;font-weight:blod;color:#000000;">选取部分的详细收入数据</text>
+          </van-col>
+          <van-col span="4">
+            <van-button plain round type="default" size="small" bind:click="clear_spendLogs_filter_income">X</van-button>
+          </van-col>
+        </van-row>
+      </view>
+
+      <!-- content-content -->
+      <view wx:for="{{spendLogs_filter_income}}" wx:for-item="datas">  
+        <view style="border-bottom:1px solid #F5F6F8">
+          <van-row>
+            <van-col offset="1" span="3">
+              <text class="cuIcon-{{datas.icon}}" style="margin-right:20rpx;font-size:36px;"></text>
+            </van-col>
+            <van-col span="19">
+              <van-row>
+                <van-col span="14" class="text-left">
+                  <view>
+                    <text style="font-size:17px;">{{datas.name}} </text>
+                    <text style="font-size:14px;color:#888888;" class="overFlow">{{datas.comment}}</text>
+                  </view>
+                  <view style="font-size:11px;color:#B2B2B2;margin-bottom:5rpx;">{{datas.time}} {{datas.detail_time}} {{datas.spend_type==null?'转账':datas.spend_type}}</view>
+                </van-col>
+                <van-col span="10" class="text-right">
+                  <view wx:if="{{datas.spend_type==null}}" class="text-right" style="font-size:17px;color:#888888;">{{datas.operate}}{{datas.value}}</view>
+                  <view wx:elif="{{datas.operate=='+'}}" class="text-right" style="font-size:17px;color:#09BB07;">{{datas.operate}}{{datas.value}}</view>
+                  <view wx:else class="text-right" style="font-size:17px;color:#E64340;">{{datas.operate}}{{datas.value}}</view>
+                  <view style="font-size:14px;color:#888888;">余额: {{datas.remain}}</view>
+                </van-col>
+              </van-row>
+            </van-col>
+            <van-col span="1"></van-col>
+          </van-row>
+        </view>
+      </view>
+
+    </view>
+  </view>
+</van-transition>
+
+<van-popup 
+  show="{{ show_timeChoose_popup }}" 
+  bind:close="onClose_timeChoose_popup"
+  position="bottom"
+  custom-style="height: 50%;"
+>
+  <van-datetime-picker
+  title="时间选择"
+  type="year-month"
+  value="{{ currentDate }}"
+  bind:cancel="onClose_timeChoose_popup"
+  bind:confirm="timeChoose"
+  confirm-button-text="加载"
+  />
+</van-popup>

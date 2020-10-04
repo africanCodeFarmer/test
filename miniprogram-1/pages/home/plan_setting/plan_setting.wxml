@@ -1,0 +1,20 @@
+<import src="../../public/public.wxml" />
+<template is="custom_inner" data="{{...custom_data}}"/>
+
+<van-cell-group title="数据设置">
+  <van-cell icon="description" title="计划" value="" is-link link-type="navigateTo"
+  url="plan_CURD/plan_CURD"/>
+</van-cell-group>
+
+<van-cell-group title="辅助数据设置">
+  <van-field
+    label="每月可免/天"
+    value="{{ month_free_count }}"
+    placeholder="请输入"
+    type="number"
+    border="{{ false }}"
+    bind:change="onChange_month_free_count"
+  >
+    <van-button slot="button" round size="small" type="primary" bind:click="update_month_free_count">确定</van-button>
+  </van-field>
+</van-cell-group>
