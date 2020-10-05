@@ -114,7 +114,7 @@
 
     <view slot="right" style="height:100%;">
       <van-button custom-style="height:100%;" hairline icon="edit" type="primary" id="{{item.id}}" bind:click="edit"></van-button>
-      <van-button custom-style="height:100%;" hairline icon="delete" type="danger" id="{{item.id}}" data-name="{{item.name}}" bind:click="delete"></van-button>
+      <van-button custom-style="height:100%;" hairline icon="delete" type="danger" id="{{item.id}}" data-name="{{item.name}}" data-imagepath="{{item.iconPath}}" bind:click="delete"></van-button>
     </view>
     
   </van-swipe-cell>

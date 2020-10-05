@@ -96,29 +96,46 @@ Page({
       return;
     }
 
-    var targets =this.data.targets
-    var time = util.formatTime(new Date())
-    var target = {
-      "id":targets.length==0?1:targets[targets.length-1].id+1,
-      "name":this.data.target_name,
-      "desc":this.data.target_desc,
-      "value":this.data.target_value,
-      "iconPath":this.data.fileList[0].url,
-      "achieved":this.data.radio_value=='0'?false:true,
-      "create_time":time,
-      "achieved_time":null,
-    }
-    targets.push(target)
-    wx.setStorageSync('targets', targets)
-    this.setData({targets:targets})
-    this.reset()
+    //图片的临时路径转换为存储路径 存储图片
+    var that = this
+    wx.saveFile({
+      tempFilePath:this.data.fileList[0].url,
+      success:function(res){
+        var savedFilePath = res.savedFilePath;
+        console.log(savedFilePath);
+        
+        that.setData({
+          fileList:[{"name":null,"url":savedFilePath}]
+        })
 
-    wx.showToast({
-      icon:'none',
-      title: '添加成功',
-    })
+        var targets =that.data.targets
+        var time = util.formatTime(new Date())
+        var target = {
+          "id":targets.length==0?1:targets[targets.length-1].id+1,
+          "name":that.data.target_name,
+          "desc":that.data.target_desc,
+          "value":that.data.target_value,
+          "iconPath":that.data.fileList[0].url,
+          "achieved":that.data.radio_value=='0'?false:true,
+          "create_time":time,
+          "achieved_time":null,
+        }
+        targets.push(target)
+        wx.setStorageSync('targets', targets)
+        that.setData({targets:targets})
+        that.reset()
+
+        wx.showToast({
+          icon:'none',
+          title: '添加成功',
+        })    
+      }
+    });
   },
   delete:function(e){
+    var imagepath = e.target.dataset.imagepath
+    console.log(imagepath)
+
     var name = e.target.dataset.name
     var id = e.target.id
     Dialog.confirm({
@@ -139,6 +156,14 @@ Page({
       wx.showToast({
         icon:'none',
         title: '删除成功',
+      })
+
+      //删除图片
+      wx.removeSavedFile({
+        filePath: imagepath,
+        complete (res) {
+          console.log('已删除图片')
+        }
       })
     }).catch(() => {
       // on cancel

@@ -137,12 +137,23 @@ Page({
           specificTasks[i].complete_time = util.formatTime(new Date()) 
           specificTasks[i].count++
           tasks[0].types[day_completed_count_name]+=1
+
+          var msg = '已完成 '+e.target.dataset.name
+          wx.showToast({
+            title: msg,
+            icon:'none',
+          })
         }
         else{
           specificTasks[i].completed = false
           specificTasks[i].complete_time = ""
           specificTasks[i].count--
           tasks[0].types[day_completed_count_name]-=1
+
+          wx.showToast({
+            title: '已取消',
+            icon:'none',
+          })
         }
       }
     }

@@ -36,12 +36,12 @@
           
           <view wx:for="{{item}}" wx:for-item="items" wx:for-index="i">
           
-          <van-transition show="{{showAllTasks==true?'none':items.completed==false}}" custom-class="block">
-            <view>
+          <!-- <van-transition show="{{showAllTasks==true?'none':items.completed==false}}" custom-class="block"> -->
+            <view wx:if="{{showAllTasks==true?'none':items.completed==false}}">
               <van-row>
                 <van-col span="2">
                   <!-- 打钩框 -->
-                  <van-icon wx:if="{{items.remain_time=='' || items.remain_time>0 ||items.completed}}" name="{{items.completed==true?'checked':'circle'}}" bind:click="onClick_complete" id="{{index}} {{items.id}}" size="20px" color="{{items.completed==true?'#07C160':''}}">
+                  <van-icon wx:if="{{items.remain_time=='' || items.remain_time>0 ||items.completed}}" name="{{items.completed==true?'checked':'circle'}}" bind:click="onClick_complete" id="{{index}} {{items.id}}" data-name="{{items.name}}" size="20px" color="{{items.completed==true?'#07C160':''}}">
                   </van-icon>
                   <van-icon wx:else name="close" size="20px">
                   </van-icon>
@@ -85,7 +85,7 @@
                 </van-col>
               </van-row>
             </view>
-          </van-transition>
+          <!-- </van-transition> -->
 
           </view>
         </scroll-view>

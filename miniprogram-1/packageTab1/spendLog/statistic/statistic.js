@@ -107,11 +107,10 @@ function initChart_column(canvas, width, height) {
           text: '本月各花支类型支出情况',
           left: 'left',
       },
-      tooltip: {
-          trigger: 'item',
-          formatter: '{b}: {c}\n{d}%'
-          
-      },
+      // tooltip: {
+      //     trigger: 'item',
+      //     formatter: '{b}: {c}\n{d}%' 
+      // },
       visualMap: {
           show: false,
           min: 80,
@@ -150,6 +149,8 @@ function initChart_column(canvas, width, height) {
 
     //点击监听事件 暂时在这
     function eConsole(param) {
+      var percent = param.percent +'%'
+      var value = param.data['value']
       var spendTypeName = param.data['name'] //点击的饼图区块名(花支类名)
       console.log(spendTypeName)
       var spendLogs = wx.getStorageSync('spendLogs') || [] //获取所有花支日志
@@ -198,7 +199,8 @@ function initChart_column(canvas, width, height) {
 
       //ret为所需要的数据数组 渲染到前端
       currentPage.setData({
-        spendLogs_filter_spend:ret
+        spendLogs_filter_spend:ret,
+        spendDetailWindowName:spendTypeName+": "+value+' '+percent
       })
     }
     pie_chart.on("click", eConsole);
@@ -218,10 +220,10 @@ function initChart_column(canvas, width, height) {
           text: '本月各收入类型收入情况',
           left: 'left',
       },
-      tooltip: {
-          trigger: 'item',
-          formatter: '{b}: {c}\n{d}%'
-      },
+      // tooltip: {
+      //     trigger: 'item',
+      //     formatter: '{b}: {c}\n{d}%'
+      // },
       visualMap: {
           show: false,
           min: 80,
@@ -261,6 +263,8 @@ function initChart_column(canvas, width, height) {
 
     //点击监听事件 暂时在这
     function eConsole(param) {
+      var percent = param.percent +'%'
+      var value = param.data['value'] //点击的饼图区块名(花支类名)
       var spendTypeName = param.data['name'] //点击的饼图区块名(花支类名)
       console.log(spendTypeName)
       var spendLogs = wx.getStorageSync('spendLogs') || [] //获取所有花支日志
@@ -309,7 +313,8 @@ function initChart_column(canvas, width, height) {
 
       //ret为所需要的数据数组 渲染到前端
       currentPage.setData({
-        spendLogs_filter_income:ret
+        spendLogs_filter_income:ret,
+        incomeDetailWindowName:spendTypeName+": "+value+' '+percent
       })
     }
     income_pie_chart.on("click", eConsole);
@@ -365,7 +370,9 @@ function updateChart_column(data_spends,data_incomes){
 
 Page({
   data: {
+    spendDetailWindowName:'',
     spendLogs_filter_spend:[],
+    incomeDetailWindowName:'',
     spendLogs_filter_income:[],
 
     currentDate: new Date().getTime(),

@@ -3,21 +3,32 @@
 
 <view class="padding text-left">
   <view class="padding radius shadow bg-white">
-    <van-row>
-      <van-col span="16">
-        <van-skeleton title row="1" loading="{{show_title_text}}">
+    <view style="position:relative;">
+      <view style="display:inline-block;width:100%;">
+
+        <van-image
+          round
+          width="5rem"
+          height="5rem"
+          src="{{user.imagepath}}"
+        />
+        <view style="padding-top:2px;vertical-align:top;margin-left:15px;display:inline-block;">
           <view style="font-size:20px;color:black;">{{greet_text}}</view>
-        </van-skeleton>
-      </van-col>
-      <van-col span="8" class="text-right">
+          <view style="margin-top:5px;font-size:18px;">{{user.name}}</view>
+          <view style="margin-top:2px;font-size:12px;">{{user.msg}}</view>
+        </view>
+
+      </view>
+
+      <view style="position:absolute;top:0;right:0;">
         <van-button plain round type="info" size="small" bind:click="onClick_data_setting">全局数据管理</van-button>
-      </van-col>
-    </van-row>
-    <view style="height:20rpx;"></view>
+      </view>
+
+    </view>
+    
+    <van-divider />
+
     <van-row>
-      <!-- <van-col span="8" class="text-left">
-        <text>您的位置</text>
-      </van-col> -->
       <van-col span="24" class="text-left">
         <text>{{weather}}</text>
       </van-col>
@@ -25,21 +36,53 @@
   </view>
 </view>
 
-<!-- 搬移区域 -->
-<!-- 我的时间计划 -->
-<view style="padding:10px 20px 20px 20px">
-  <view class="bg-white radius shadow" style="padding:20px">
+<!-- <view class="padding text-left">
+  <view class="padding radius shadow bg-white">
 
     <van-row>
-      <van-col span="24">
-        <text style="font-size:20px;">我的今日规划</text>
-        <view style="margin:0px 0px 0px 4px;display:inline-block;">
-          <van-tag plain type="primary" size="medium" bindtap="onClick_reveal">展示所有未完成任务</van-tag>
-        </view>
+      <van-col span="16">
+        <van-skeleton title row="1" loading="{{show_title_text}}">
+          <van-image
+            round
+            width="5rem"
+            height="5rem"
+            src="../../../../pages/home/cat.jpeg"
+          />
+          <view style="padding-top:4px;vertical-align:top;margin-left:15px;display:inline-block;">
+            <view style="font-size:20px;color:black;">{{greet_text}}</view>
+            <view style="margin-top:2px;font-size:18px;">hxl</view>
+            <view style="padding:10px 0px 0px 5px;font-size:12px;">一二三四五六七八九十</view>
+          </view>
+        </van-skeleton>
+      </van-col>
+      <van-col span="8" class="text-right">
+        <van-button plain round type="info" size="small" bind:click="onClick_data_setting">全局数据管理</van-button>
       </van-col>
     </van-row>
+
+    <van-divider />
+
+    <van-row>
+      <van-col span="24" class="text-left">
+        <text>{{weather}}</text>
+      </van-col>
+    </van-row>
+  </view>
+</view> -->
+
+<!-- 搬移区域 -->
+<!-- 我的时间计划 -->
+<view class="padding">
+  <view class="bg-white radius shadow padding">
+
+    <view class="flex">
+      <text style="font-size:20px;" space="ensp">我的今日规划 </text>
+      <view style="margin-top:4px;">
+        <van-tag plain type="primary" size="medium" bindtap="onClick_reveal">展示所有未完成任务</van-tag>
+      </view>
+    </view>
+
     <van-divider hairline />
-    
 
     <form bindsubmit="formSubmit">  
       <!-- 时间段 -->
@@ -98,9 +141,11 @@
 
         <van-row>
           <van-col span="20">
-            <text style="font-size:20px;">我的长期规划</text>
-            <view style="margin-left:10rpx;display:inline-block;">
-              <van-tag plain type="primary" size="medium" bindtap="onClick_reveal_completed_plan">展示完成计划</van-tag>
+            <view class="flex">
+              <text style="font-size:20px;" space="ensp">我的长期规划 </text>
+              <view style="margin-top:4px;">
+                <van-tag plain type="primary" size="medium" bindtap="onClick_reveal_completed_plan">展示完成计划</van-tag>
+              </view>
             </view>
           </van-col>
           <van-col span="4">

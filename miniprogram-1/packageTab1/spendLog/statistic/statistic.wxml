@@ -59,7 +59,7 @@
       <view style="padding:10rpx 4% 20rpx 4%;border-bottom:1px solid #F5F6F8;">
         <van-row>
           <van-col span="20">
-            <text style="font-size:20px;font-weight:blod;color:#000000;">选取部分的详细支出数据</text>
+            <text style="font-size:14px;font-weight:blod;color:#000000;">{{spendDetailWindowName}}</text>
           </van-col>
           <van-col span="4">
             <van-button plain round type="default" size="small" bind:click="clear_spendLogs_filter_spend">X</van-button>
@@ -116,7 +116,7 @@
       <view style="padding:10rpx 4% 20rpx 4%;border-bottom:1px solid #F5F6F8;">
         <van-row>
           <van-col span="20">
-            <text style="font-size:20px;font-weight:blod;color:#000000;">选取部分的详细收入数据</text>
+            <text style="font-size:14px;font-weight:blod;color:#000000;">{{incomeDetailWindowName}}</text>
           </van-col>
           <van-col span="4">
             <van-button plain round type="default" size="small" bind:click="clear_spendLogs_filter_income">X</van-button>

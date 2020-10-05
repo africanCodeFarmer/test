@@ -11,4 +11,47 @@
   <van-cell icon="edit" title="优化花支日志金额格式" bind:click="onClick_updateSpendLogsValues"/>
 </van-cell-group> -->
 
+<view style="height:20px;"></view>
+
+<!-- 个人信息表单 -->
+<van-cell>
+  <van-row>
+    <van-col span="24" class="text-center">
+      <view style="color:black;font-size:20px;padding:5px;">用户信息</view>
+    </van-col>
+  </van-row>
+</van-cell>
+<van-field
+  name="user_name"
+  value="{{ user.name }}"
+  label="昵称"
+  placeholder="请输入昵称"
+  bind:change="update_user_name"
+/>
+<van-field
+  name="user_msg"
+  value="{{ user.msg }}"
+  label="个人签名"
+  placeholder="请输入个人签名"
+  bind:change="update_user_msg"
+/>
+<van-cell>
+  <van-row>
+    <van-col span="6" class="text-left" style="color:black;">目标图片</van-col>
+    <van-col span="18" class="text-left">
+      <view style="margin-top:20rpx;"></view>
+      <van-uploader file-list="{{ fileList }}" bind:after-read="afterRead" max-count="1" bind:delete="afterRead_delete"/>
+    </van-col>
+  </van-row>
+</van-cell>
+<van-cell>
+  <van-row>
+    <van-col offset="6" span="12" class="text-center">
+      <view style="padding:4px;">
+        <van-button  plain type="primary" size="large" bind:click="save">保存</van-button>
+      </view>
+    </van-col>
+  </van-row>
+</van-cell>
+
 <van-dialog id="van-dialog" />

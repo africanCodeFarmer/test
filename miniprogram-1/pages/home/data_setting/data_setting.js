@@ -2,7 +2,82 @@ import Dialog from '@vant/weapp/dialog/dialog';
 
 Page({
   data: {
-    custom_data:{"backText":"主页","content":"全局数据管理"}
+    custom_data:{"backText":"主页","content":"全局数据管理"},
+    fileList: [],
+
+    user:{name:'',msg:'',imagepath:''},
+  },
+  update_user_name:function(e){
+    var user = this.data.user
+    user.name = e.detail
+    this.setData({
+      user:user
+    })
+  },
+  update_user_msg:function(e){
+    var user = this.data.user
+    user.msg = e.detail
+    this.setData({
+      user:user
+    })
+  },
+  onShow:function(){
+    var user = wx.getStorageSync('user') || {name:'',msg:'',imagepath:''}
+    
+    //填充图片上传
+    if(user.imagepath!='')
+      this.setData({
+        fileList:[{"name":null,"url":user.imagepath}]
+      })
+
+    this.setData({
+      user:user
+    })
+  },
+  save:function(){
+    var user = this.data.user
+
+    //图片的临时路径转换为存储路径 存储图片
+    var that = this
+    if(this.data.fileList.length>0){ //有头像的保存
+      wx.saveFile({
+        tempFilePath:this.data.fileList[0].url,
+        success:function(res){
+          var savedFilePath = res.savedFilePath;
+          console.log(savedFilePath); 
+          
+          user.imagepath = savedFilePath
+          wx.setStorageSync('user', user)
+        },
+        fail:function(res){
+          wx.setStorageSync('user', user)
+        }
+      });
+    }
+    else{ //无头像的保存
+      if(user.imagepath!=''){
+        wx.removeSavedFile({
+          filePath: user.imagepath,
+          complete (res) {
+            console.log('已删除图片')
+          }
+        })
+      }
+      user.imagepath=''
+      wx.setStorageSync('user', user)
+    }
+
+    wx.showToast({
+      title: '保存成功',
+      icon:'none',
+    })
+  },
+  afterRead_delete:function(){
+    this.setData({fileList:[]})
+  },
+  afterRead:function(e){
+    var path = e.detail.file.path
+    this.setData({fileList:[{"name":null,"url":path}]})
   },
   onClick_updateSpendLogsValues:function(){
     wx.showLoading({

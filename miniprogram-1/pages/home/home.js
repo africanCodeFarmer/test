@@ -443,10 +443,12 @@ Page({
     //展示所有任务
     var task_colors = wx.getStorageSync('task_colors') || []
     var tasks = wx.getStorageSync('tasks') || []
-    
+    var user = wx.getStorageSync('user') || {name:'',msg:'',imagepath:''}
+
     this.setData({
       task_colors:task_colors,
       tasks:tasks,
+      user:user,
     })
 
     //天气

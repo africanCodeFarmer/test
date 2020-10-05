@@ -94,7 +94,8 @@
     "van-steps": "@vant/weapp/steps/index",
     "van-circle": "@vant/weapp/circle/index",
     "van-transition": "@vant/weapp/transition/index",
-    "cu-custom": "style/colorui/components/cu-custom"
+    "cu-custom": "style/colorui/components/cu-custom",
+    "van-image": "@vant/weapp/image/index"
   },
   "permission": {
     "scope.userLocation": {
