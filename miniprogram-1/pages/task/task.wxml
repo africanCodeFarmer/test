@@ -106,6 +106,49 @@
   </view>
 </view>
 
+<!-- 时间线板块 -->
+<!-- <view class="padding text-left">
+  <view class="padding radius shadow bg-white"> 
+    标题栏
+    <van-row>
+      <van-col span="18">
+        <view class="flex">
+          <text style="font-size:20px;" space="ensp">我的时间线 </text>
+        </view>
+      </van-col>
+      <van-col span="6" class="text-right">
+        <van-button plain round type="default" icon="setting-o" size="small" bind:click="">
+        </van-button>
+      </van-col>
+    </van-row>
+    <van-divider hairline />
+
+    内容
+    <scroll-view style="height:500px;" scroll-y>
+      <van-steps 
+        steps="{{ steps }}" 
+        active="{{ 1 }}" 
+        active-icon="success"
+        active-color="#38f" 
+        direction="vertical" 
+        bind:click-step="click_step"
+      />
+    </scroll-view>
+
+    底部
+    <van-row>
+      <van-col span="24" class="text-right">
+        <van-button plain round type="primary" icon="plus" size="small" bind:click="onClick_addTask">
+        </van-button>
+      </van-col>
+    </van-row>
+    
+  </view>
+</view> -->
+
+<!-- 其他元素 -->
+<view style="height:50px"></view>
+
 <van-popup 
   show="{{ show_add_task_popup }}" 
   bind:close="onClose_add_task_popup"

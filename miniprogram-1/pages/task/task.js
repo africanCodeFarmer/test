@@ -56,7 +56,34 @@ Page({
     remain_taskCount:0,
 
     show_task_popup:false,
+    
+    //时间线板块数据
+    steps: [
+      {
+        text: '10.06',
+        desc: '刷算法,毕设',
+      },
+      {
+        text: '10.15',
+        desc: '仙人掌浇水,要500生活费',
+      },
+      {
+        text: '10.17',
+        desc: '蓝桥比赛',
+      },
+      {
+        text: '11.27',
+        desc: '人工智能,小程序,毕设',
+      },
+    ],
   },
+  //时间线板块
+  click_step:function(e){
+    var name = e.detail.name
+    
+    console.log(name)
+  },
+
   //只排序今日所有任务
   sortTasks:function(){
     var tasks = this.data.tasks
